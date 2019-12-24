@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": false,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "pretty": true,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "typeRoots": ["./node_modules/@types"],
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "exclude": ["example", "dist"]
+}

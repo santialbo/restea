@@ -1,0 +1,7 @@
+example
+.prettierrc
+.gitignore
+src/
+index.ts
+jest.config.js
+tsconfig.json
