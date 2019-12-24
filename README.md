@@ -1,5 +1,5 @@
 # restea
-**restea** is a collection of several middleware functions that can be composed in order to validate incoming (and outgoing) data in a declarative and documenting way. **retea** is built to be used with [TypeScript](https://github.com/microsoft/TypeScript) and [koa](https://github.com/koajs/koa) with [@koa/router](https://github.com/koajs/router).
+**restea** is a collection of several middleware functions that can be composed in order to validate incoming (and outgoing) data in a declarative and documenting way. **restea** is built to be used with [TypeScript](https://github.com/microsoft/TypeScript) and [koa](https://github.com/koajs/koa) with [@koa/router](https://github.com/koajs/router).
 
 These middleware, not only do the validation but they also provide types inside the handler function. See example below:
 
@@ -26,6 +26,20 @@ router.get(
   }
 );
 ```
+
+An additional benefit of using restea is that these middleware are holding the necessary metadata that allows the generation of an [Open API schema](https://spec.openapis.org/oas/v3.0.0.html).
+
+## Run the example
+Running the example is the best way to see restea in action
+```sh
+git clone https://github.com/santialbo/restea
+cd restea
+yarn
+cd example
+yarn
+yarn dev
+```
+Now head to `https://editor.swagger.io/` and load the spec from `http://localhost:3000/schema`.
 
 ## How to use
 ### Installation
