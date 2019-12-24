@@ -41,7 +41,7 @@ router.get(
     description('Fetch a paginated list of users.'),
     paginated(),
     sortable({ fields: ['id', 'name'], default: '+id' }),
-    query('role', string('none', 'admin', 'superadmin'), {
+    query('role', string('none', 'admin'), {
       description: 'If provided will filter users based on this role',
     }),
     returns(Ok(ArrayOfSchema(UserSchema)))
