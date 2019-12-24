@@ -27,7 +27,8 @@ router.get(
 );
 ```
 
-An additional benefit of using restea is that these middleware are holding the necessary metadata that allows the generation of an [Open API schema](https://spec.openapis.org/oas/v3.0.0.html).
+An additional benefit of using restea is that these middleware are holding the necessary metadata that allows the generation of an [Open API schema](https://spec.openapis.org/oas/v3.0.0.html). See below an example of the generated docs for the previous example.
+![Generated documentation](/example/docs.png)
 
 ## Run the example
 Running the example is the best way to see restea in action
