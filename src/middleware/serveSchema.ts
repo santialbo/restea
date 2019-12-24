@@ -19,10 +19,13 @@ export function serveSchema(router: Router, options: Partial<OpenAPIObject>) {
       description: 'OpenAPI specification',
       responses: {
         '200': {
-          description: 'OpenAPI specification',
-          schema: {
-            $ref:
-              'https://rawgit.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json',
+          content: {
+            'application/json': {
+              schema: {
+                $ref:
+                  'https://rawgit.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json',
+              },
+            },
           },
         },
       },
