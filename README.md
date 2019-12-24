@@ -1,5 +1,5 @@
 # restea
-**restea** is a collection of several middleware functions that can be composed in order to validate incoming (and outgoing) data in a declarative and documenting way. **retea** is built to be used with [TypeScript](https://github.com/microsoft/TypeScript) and [koa](https://github.com/koajs/koa) with [@koa/router](https://github.com/koajs/router).
+**restea** is a collection of several middleware functions that can be composed in order to validate incoming (and outgoing) data in a declarative and documenting way. **restea** is built to be used with [TypeScript](https://github.com/microsoft/TypeScript) and [koa](https://github.com/koajs/koa) with [@koa/router](https://github.com/koajs/router).
 
 These middleware, not only do the validation but they also provide types inside the handler function. See example below:
 
