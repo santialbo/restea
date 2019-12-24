@@ -46,7 +46,7 @@ export type QueryOptions<T> = {
 export function query<TName extends string, TType>(
   name: TName,
   validator: ParameterValidator<TType>,
-  opts: QueryOptions<TType>
+  opts: QueryOptions<TType> = {}
 ) {
   opts = {
     required: false,
