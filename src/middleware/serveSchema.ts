@@ -19,6 +19,7 @@ export function serveSchema(router: Router, options: Partial<OpenAPIObject>) {
       description: 'OpenAPI specification',
       responses: {
         '200': {
+          description: 'OpenAPI specification',
           content: {
             'application/json': {
               schema: {
