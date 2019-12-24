@@ -27,6 +27,20 @@ router.get(
 );
 ```
 
+An additional benefit of using restea is that these middleware are holding the necessary metadata that allows the generation of an [Open API schema](https://spec.openapis.org/oas/v3.0.0.html).
+
+## Run the example
+Running the example is the best way to see restea in action
+```sh
+git clone https://github.com/santialbo/restea
+cd restea
+yarn
+cd example
+yarn
+yarn dev
+```
+Now head to `https://editor.swagger.io/` and load the spec from `http://localhost:3000/schema`.
+
 ## How to use
 ### Installation
 ```
