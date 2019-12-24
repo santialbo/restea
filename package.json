@@ -27,6 +27,7 @@
     "@types/koa__router": "^8.0.2",
     "@types/uuid": "^3.4.6",
     "@types/validator": "^12.0.1",
+    "cz-conventional-changelog": "3.0.2",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
@@ -47,5 +48,10 @@
     "url": "https://github.com/santialbo/restea/issues"
   },
   "homepage": "https://github.com/santialbo/restea#readme",
-  "description": ""
+  "description": "",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
