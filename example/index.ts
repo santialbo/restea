@@ -43,11 +43,15 @@ router.get(
     sortable({ fields: ['id', 'name'], default: '+id' }),
     query('role', string('none', 'admin'), {
       description: 'If provided will filter users based on this role',
+      required: true
+    }),
+    query('maybeRole', string('none', 'admin'), {
+      description: 'If provided will filter users based on this role',
     }),
     returns(Ok(ArrayOfSchema(UserSchema)))
   ),
   (ctx, next) => {
-    const { offset, limit, sort, role } = ctx.state.params;
+    const { offset, limit, sort, role, maybeRole } = ctx.state.params;
     ctx.state.returns = [];
   }
 );
