@@ -1,6 +1,6 @@
-import { Middleware } from 'koa';
+import { Middleware, ParameterizedContext, DefaultContext } from 'koa';
 import { InvalidParameterError } from '../errors';
-import { ParameterObject } from '../open-api';
+import { ParameterObject, WithMetadata } from '../open-api';
 import {
   addOperationParameter,
   addParameterComponent,
@@ -37,6 +37,43 @@ export type QueryOptions<T> = {
   default?: T;
 };
 
+export interface RequiredQueryOptions<T> extends QueryOptions<T> {
+  required: true;
+}
+
+/*
+ * Note about these overloads:
+ *
+ * In the actual runtime implementation, due to limitations of TS's type logic
+ * (and possibly limitations of my own knowledge of TS), we just define the
+ * function as always returning OptionalMiddleware. The narrowing happens based
+ * just on the type overload.
+ *
+ * Because of this, it could be possible to break the below logic such that
+ * undefined values were returned from query() with {required: true}, since
+ * nothing actually type checks that.
+ * 
+ * Ideally, unit tests should be added to cover this :)
+ */
+
+type WithRequiredParam<TName extends string, TType> = { params: { [key in TName]: TType; } }
+type WithOptionalParam<TName extends string, TType> = { params: { [key in TName]: TType | undefined; } }
+
+type RequiredMiddleware<TName extends string, TType> = WithMetadata<Middleware<WithRequiredParam<TName, TType>, DefaultContext>>;
+type OptionalMiddleware<TName extends string, TType> = WithMetadata<Middleware<WithOptionalParam<TName, TType>, DefaultContext>>;
+
+export function query<TName extends string, TType>(
+  name: TName,
+  validator: ParameterValidator<TType>,
+  opts: RequiredQueryOptions<TType>
+): RequiredMiddleware<TName, TType>;
+
+export function query<TName extends string, TType>(
+  name: TName,
+  validator: ParameterValidator<TType>,
+  opts: QueryOptions<TType>
+): OptionalMiddleware<TName, TType>;
+
 /**
  * Ensures that the query parameter with the specified name is valid.
  * @param name The name of the parameter.
@@ -47,7 +84,7 @@ export function query<TName extends string, TType>(
   name: TName,
   validator: ParameterValidator<TType>,
   opts: QueryOptions<TType> = {}
-) {
+): OptionalMiddleware<TName, TType> {
   opts = {
     required: false,
     default: <TType>(<unknown>null),
@@ -63,7 +100,7 @@ export function query<TName extends string, TType>(
     schema: validator.schema as any,
   };
   return compose(
-    withMetadata<Middleware<{ params: { [key in TName]: TType } }>>(
+    withMetadata<Middleware<WithOptionalParam<TName, TType>>>(
       async (ctx, next) => {
         let value = ctx.query[name];
         if (Array.isArray(value)) {
@@ -71,9 +108,9 @@ export function query<TName extends string, TType>(
         }
         ctx.state.params = ctx.state.params ?? {};
         try {
-          const present =
-            typeof value === 'undefined' || (opts.ignoreEmpty && value === '');
-          if (present) {
+          const valueMissing =
+            typeof value === 'undefined' || (!opts.ignoreEmpty && value === '');
+          if (valueMissing) {
             if (opts.required) {
               throw new InvalidParameterError(
                 name,
@@ -81,7 +118,7 @@ export function query<TName extends string, TType>(
                 new ValidationError('Required parameter is missing.')
               );
             } else {
-              ctx.state.params[name] = opts.default!;
+              ctx.state.params[name] = opts.default;
             }
           } else {
             ctx.state.params[name] = await validator.validate(value);
